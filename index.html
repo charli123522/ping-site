@@ -7,348 +7,430 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --red: #D41E2B;
-    --dark: #1a1a1a;
-    --mid: #555555;
-    --light: #f5f3f0;
-    --white: #ffffff;
-    --border: #e0dbd5;
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red:    #D41E2B;
+  --dark:   #1a1a1a;
+  --mid:    #5a5a5a;
+  --light:  #f6f4f1;
+  --white:  #ffffff;
+  --border: #e2ddd8;
+
+  --space-xs:  16px;
+  --space-sm:  24px;
+  --space-md:  48px;
+  --space-lg:  80px;
+  --space-xl:  120px;
+
+  --pad-x: clamp(24px, 5vw, 80px);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--white);
+  color: var(--dark);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+/* ── PAGE TOGGLE ── */
+.page { display: none; }
+.page.active { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ── NAV ── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px var(--pad-x);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: 100;
+  height: 64px;
+}
+
+.nav-wordmark {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--red);
+  cursor: pointer;
+  line-height: 1;
+  user-select: none;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--mid);
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.15s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--dark);
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  padding: 14px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+.btn:hover { opacity: 0.87; }
+
+.btn-ghost {
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,0.5);
+  color: var(--white);
+  padding: 13px 28px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--white);
+}
+
+/* ══════════════════════════
+   HOME PAGE
+══════════════════════════ */
+
+/* ── HERO ── */
+.hero {
+  padding: var(--space-xl) var(--pad-x) var(--space-lg);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(38px, 5.5vw, 68px);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  color: var(--dark);
+  max-width: 700px;
+  margin-bottom: 24px;
+}
+
+.hero-sub {
+  font-size: clamp(15px, 1.8vw, 17px);
+  color: var(--mid);
+  max-width: 460px;
+  line-height: 1.75;
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+/* ── FEATURES ── */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+
+.feature {
+  padding: var(--space-md) var(--pad-x);
+  border-right: 1px solid var(--border);
+}
+
+.feature:last-child { border-right: none; }
+
+.feature-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.feature h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── CTA STRIP ── */
+.cta-strip {
+  background: var(--dark);
+  padding: var(--space-md) var(--pad-x);
+}
+
+.cta-strip-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.cta-strip h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(22px, 3vw, 30px);
+  color: var(--white);
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding: 22px var(--pad-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.site-footer span,
+.site-footer a {
+  font-size: 13px;
+  color: var(--mid);
+  font-weight: 300;
+  text-decoration: none;
+}
+
+.site-footer a:hover { color: var(--dark); }
+
+/* ══════════════════════════
+   CONTACT PAGE
+══════════════════════════ */
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+}
+
+/* Left panel */
+.contact-left {
+  background: var(--light);
+  padding: var(--space-lg) var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  border-right: 1px solid var(--border);
+}
+
+.contact-left-top h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+
+.contact-left-top p {
+  font-size: 15px;
+  color: var(--mid);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.contact-left-bottom { display: flex; flex-direction: column; gap: 20px; }
+
+.detail-item { display: flex; flex-direction: column; gap: 4px; }
+
+.detail-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.detail-value {
+  font-size: 15px;
+  color: var(--dark);
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.detail-value:hover { text-decoration: underline; }
+
+/* Right panel — form */
+.contact-right {
+  background: var(--white);
+  padding: var(--space-lg) var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-right h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--dark);
+  margin-bottom: 32px;
+}
+
+.form-group { margin-bottom: 20px; }
+
+.form-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--dark);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.15s;
+  resize: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: #c0b8b0; }
+
+.form-group input:focus,
+.form-group textarea:focus { border-color: var(--dark); }
+
+.form-submit {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* ══════════════════════════
+   RESPONSIVE
+══════════════════════════ */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .features {
+    grid-template-columns: 1fr 1fr;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--white);
-    color: var(--dark);
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  /* ── NAV ── */
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px 64px;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: var(--white);
-    z-index: 100;
-  }
-
-  .nav-wordmark {
-    font-family: 'Outfit', sans-serif;
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
-    color: var(--red);
-    cursor: pointer;
-    line-height: 1;
-    user-select: none;
-  }
-
-  .nav-links { display: flex; gap: 36px; align-items: center; }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--mid);
-    font-size: 14px;
-    font-weight: 400;
-    transition: color 0.18s;
-  }
-
-  .nav-links a:hover,
-  .nav-links a.active { color: var(--dark); }
-
-  /* ── PAGE TOGGLE ── */
-  .page { display: none; }
-  .page.active { display: block; }
-
-  /* ── HERO ── */
-  .hero {
-    padding: 88px 64px 72px;
-    max-width: 800px;
-  }
-
-  .hero-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 24px;
-  }
-
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(40px, 5.5vw, 66px);
-    line-height: 1.1;
-    letter-spacing: -1.5px;
-    color: var(--dark);
-    margin-bottom: 24px;
-    max-width: 680px;
-  }
-
-  .hero p {
-    font-size: 17px;
-    color: var(--mid);
-    max-width: 480px;
-    line-height: 1.75;
-    font-weight: 300;
-    margin-bottom: 40px;
-  }
-
-  .btn {
-    display: inline-block;
-    background: var(--red);
-    color: var(--white);
-    padding: 13px 32px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    transition: opacity 0.18s;
-  }
-
-  .btn:hover { opacity: 0.85; }
-
-  /* ── FEATURES ── */
-  .features-section {
+  .feature:nth-child(2) { border-right: none; }
+  .feature:nth-child(3) {
+    grid-column: 1 / -1;
+    border-right: none;
     border-top: 1px solid var(--border);
-    padding: 72px 64px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
   }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  :root { --pad-x: 20px; }
+
+  nav { height: 56px; }
+
+  .hero { padding-top: 52px; padding-bottom: 52px; }
+
+  .features { grid-template-columns: 1fr; }
 
   .feature {
-    padding: 0 40px 0 0;
-    border-right: 1px solid var(--border);
-    margin-right: 40px;
-  }
-
-  .feature:last-child {
     border-right: none;
-    margin-right: 0;
-    padding-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .feature:last-child { border-bottom: none; }
+  .feature:nth-child(2) { border-right: none; }
+  .feature:nth-child(3) {
+    grid-column: auto;
+    border-top: none;
+    border-bottom: none;
   }
 
-  .feature-num {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    color: var(--red);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    opacity: 0.7;
+  .cta-strip-inner { flex-direction: column; align-items: flex-start; }
+
+  .contact-layout { grid-template-columns: 1fr; }
+
+  .contact-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    gap: 32px;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
-  .feature h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--dark);
-    line-height: 1.3;
+  .contact-right {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    justify-content: flex-start;
   }
 
-  .feature p {
-    font-size: 14px;
-    color: var(--mid);
-    line-height: 1.7;
-    font-weight: 300;
-  }
-
-  /* ── CTA STRIP ── */
-  .strip {
-    background: var(--dark);
-    padding: 56px 64px;
-  }
-
-  .strip-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-  }
-
-  .strip h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px;
-    color: var(--white);
-    letter-spacing: -0.4px;
-    line-height: 1.2;
-  }
-
-  .btn-outline {
-    display: inline-block;
-    border: 1px solid var(--white);
-    color: var(--white);
-    padding: 12px 28px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.18s, color 0.18s;
-    cursor: pointer;
-  }
-
-  .btn-outline:hover {
-    background: var(--white);
-    color: var(--dark);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 24px 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  footer span,
-  footer a {
-    font-size: 13px;
-    color: var(--mid);
-    font-weight: 300;
-    text-decoration: none;
-  }
-
-  footer a:hover { color: var(--dark); }
-
-  /* ── CONTACT PAGE ── */
-  .contact-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: calc(100vh - 69px - 65px);
-  }
-
-  .contact-info {
-    padding: 72px 64px;
-    background: var(--light);
-    display: flex;
+  .site-footer {
     flex-direction: column;
-    justify-content: space-between;
+    text-align: center;
+    gap: 6px;
   }
+}
 
-  .contact-info h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(28px, 3.5vw, 46px);
-    line-height: 1.15;
-    letter-spacing: -0.8px;
-    color: var(--dark);
-    max-width: 340px;
-    margin-bottom: 12px;
-  }
-
-  .contact-info > div > p {
-    font-size: 15px;
-    color: var(--mid);
-    font-weight: 300;
-    line-height: 1.7;
-    max-width: 320px;
-  }
-
-  .contact-details { padding-top: 0; }
-
-  .detail-row { margin-bottom: 20px; }
-
-  .detail-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 3px;
-  }
-
-  .detail-value {
-    font-size: 15px;
-    color: var(--dark);
-    font-weight: 400;
-    text-decoration: none;
-    display: block;
-  }
-
-  .detail-value:hover { text-decoration: underline; }
-
-  .contact-form {
-    padding: 72px 64px;
-    background: var(--white);
-    border-left: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .contact-form h3 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: var(--dark);
-    margin-bottom: 28px;
-  }
-
-  .form-row { margin-bottom: 20px; }
-
-  .form-row label {
-    display: block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--dark);
-    margin-bottom: 7px;
-  }
-
-  .form-row input,
-  .form-row textarea {
-    width: 100%;
-    border: 1px solid var(--border);
-    padding: 11px 14px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    color: var(--dark);
-    background: var(--white);
-    outline: none;
-    transition: border-color 0.18s;
-    resize: none;
-    appearance: none;
-  }
-
-  .form-row input::placeholder,
-  .form-row textarea::placeholder { color: #bbb; }
-
-  .form-row input:focus,
-  .form-row textarea:focus { border-color: var(--dark); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 800px) {
-    nav, .hero, .features-section, .strip, footer,
-    .contact-info, .contact-form { padding-left: 24px; padding-right: 24px; }
-
-    .hero { padding-top: 56px; padding-bottom: 56px; }
-    .features-section { grid-template-columns: 1fr; gap: 36px; }
-    .feature { border-right: none; margin-right: 0; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 36px; }
-    .feature:last-child { border-bottom: none; padding-bottom: 0; }
-    .strip-inner { flex-direction: column; align-items: flex-start; }
-    .contact-wrap { grid-template-columns: 1fr; }
-    .contact-form { border-left: none; border-top: 1px solid var(--border); }
-    footer { flex-direction: column; gap: 6px; text-align: center; }
-  }
 </style>
 </head>
 <body>
 
+<!-- ── NAV (shared) ── -->
 <nav>
   <span class="nav-wordmark" onclick="showPage('home')">pingy</span>
   <div class="nav-links">
@@ -357,26 +439,28 @@
   </div>
 </nav>
 
-<!-- ── HOME ── -->
+<!-- ══════════════════════════
+     HOME
+══════════════════════════ -->
 <div class="page active" id="page-home">
 
   <section class="hero">
-    <span class="hero-tag">SMS Marketing</span>
-    <h1>Your message, delivered. Every time.</h1>
-    <p>We run your SMS campaigns end to end — strategy, delivery, and reporting. You stay focused on your business. We handle the rest.</p>
+    <span class="hero-eyebrow">SMS Marketing</span>
+    <h1>Your message,<br>delivered. Every time.</h1>
+    <p class="hero-sub">We run your SMS campaigns end to end — strategy, delivery, and reporting. You stay focused on your business. We handle the rest.</p>
     <a class="btn" href="#" onclick="showPage('contact'); return false;">Get in touch</a>
   </section>
 
-  <section class="features-section">
+  <section class="features">
     <div class="feature">
       <div class="feature-num">01</div>
       <h3>Fully managed campaigns</h3>
-      <p>Send us your brief. We build, schedule, and deliver your campaign — no technical setup required on your end.</p>
+      <p>Send us your brief. We build, schedule, and deliver — no technical setup required on your end.</p>
     </div>
     <div class="feature">
       <div class="feature-num">02</div>
       <h3>Results you can see</h3>
-      <p>Every campaign comes with clear reporting — delivery rates, open rates, and performance breakdowns you can share with your team.</p>
+      <p>Every campaign comes with clear reporting — delivery rates, open rates, and performance breakdowns your team can act on.</p>
     </div>
     <div class="feature">
       <div class="feature-num">03</div>
@@ -385,60 +469,64 @@
     </div>
   </section>
 
-  <div class="strip">
-    <div class="strip-inner">
+  <div class="cta-strip">
+    <div class="cta-strip-inner">
       <h2>Ready to reach your audience?</h2>
-      <a class="btn-outline" href="#" onclick="showPage('contact'); return false;">Start now</a>
+      <a class="btn-ghost" href="#" onclick="showPage('contact'); return false;">Start now</a>
     </div>
   </div>
 
-  <footer>
+  <footer class="site-footer">
     <span>© 2026 pingy</span>
     <a href="https://pingy.cc" target="_blank">pingy.cc</a>
   </footer>
 
 </div>
 
-<!-- ── CONTACT ── -->
+<!-- ══════════════════════════
+     CONTACT
+══════════════════════════ -->
 <div class="page" id="page-contact">
 
-  <div class="contact-wrap">
-    <div class="contact-info">
-      <div>
+  <div class="contact-layout">
+
+    <div class="contact-left">
+      <div class="contact-left-top">
         <h2>Let's talk.</h2>
         <p>Drop us a message and we'll get back to you shortly.</p>
       </div>
-      <div class="contact-details">
-        <div class="detail-row">
-          <div class="detail-label">Email</div>
+      <div class="contact-left-bottom">
+        <div class="detail-item">
+          <span class="detail-label">Email</span>
           <a class="detail-value" href="mailto:info@pingy.cc">info@pingy.cc</a>
         </div>
-        <div class="detail-row">
-          <div class="detail-label">Website</div>
+        <div class="detail-item">
+          <span class="detail-label">Website</span>
           <a class="detail-value" href="https://pingy.cc" target="_blank">pingy.cc</a>
         </div>
       </div>
     </div>
 
-    <div class="contact-form">
+    <div class="contact-right">
       <h3>Send us a message</h3>
-      <div class="form-row">
+      <div class="form-group">
         <label>Name</label>
         <input type="text" placeholder="Your name">
       </div>
-      <div class="form-row">
+      <div class="form-group">
         <label>Email</label>
         <input type="email" placeholder="your@email.com">
       </div>
-      <div class="form-row">
+      <div class="form-group">
         <label>Message</label>
         <textarea rows="5" placeholder="Tell us about your campaign..."></textarea>
       </div>
-      <button class="btn" style="margin-top:8px; width:100%;">Send message</button>
+      <button class="btn form-submit">Send message</button>
     </div>
+
   </div>
 
-  <footer>
+  <footer class="site-footer">
     <span>© 2026 pingy</span>
     <a href="https://pingy.cc" target="_blank">pingy.cc</a>
   </footer>
